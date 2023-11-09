@@ -5,6 +5,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +15,9 @@ public class Employer extends AbstractEntity {
     @NotNull
     @Size(min = 2, max = 25, message = "Location must be reasonable size. Minimum of 2, maximum of 25.")
     private String location;
+
+    @OneToMany(mappedBy = "job")
+    private final List<Job> jobs = new ArrayList<>();
 
     public Employer() {
     }
@@ -24,6 +29,10 @@ public class Employer extends AbstractEntity {
 
     public String getLocation() {
         return location;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
     }
 
     public void setLocation(String location) {

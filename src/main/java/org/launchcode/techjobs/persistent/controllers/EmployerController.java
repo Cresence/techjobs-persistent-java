@@ -38,7 +38,7 @@ public class EmployerController {
     }
 
     @GetMapping("view/{employerId}")
-    public String displayViewEmployer(Model model, @PathVariable int employerId) {
+    public String displayViewEmployer(@RequestParam(required = false) Integer jobId, Model model, @PathVariable int employerId) {
 
         Optional optEmployer = employerRepository.findById(employerId);
         if (optEmployer.isPresent()) {
@@ -53,7 +53,7 @@ public class EmployerController {
 
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("employer", employerRepository.findAll());
+        model.addAttribute("employers", employerRepository.findAll());
         return "employers/index";
     }
 }
