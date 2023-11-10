@@ -29,6 +29,9 @@ public class HomeController {
     @Autowired
     SkillRepository skillRepository;
 
+    @Autowired
+    JobRepository jobRepository;
+
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -40,10 +43,10 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-	model.addAttribute("title", "Add Job");
-        model.addAttribute(new Job());
+	    model.addAttribute("title", "Add Job");
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
+        model.addAttribute(new Job());
         return "add";
     }
 
@@ -63,7 +66,9 @@ public class HomeController {
         } else {
             Employer employer = resultE.get();
             newJob.setSkills(skillObjs);
+            newJob.setEmployer(employer);
             model.addAttribute("title", "Employer: " + employer.getName());
+            jobRepository.save(newJob);
         }
 
         return "redirect:";
