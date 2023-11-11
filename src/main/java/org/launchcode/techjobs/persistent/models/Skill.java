@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class Skill extends AbstractEntity {
 
     @NotNull
+    @NotEmpty(message = "Cannot be empty")
     @Size(max = 250, message = "Description must be no longer than 250 char!")
     private String description;
 
