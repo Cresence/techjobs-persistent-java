@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Employer extends AbstractEntity {
 
     @NotNull
+    @NotEmpty
     @Size(min = 2, max = 25, message = "Location must be reasonable size. Minimum of 2, maximum of 25.")
     private String location;
 

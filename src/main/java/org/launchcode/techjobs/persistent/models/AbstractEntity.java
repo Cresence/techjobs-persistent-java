@@ -16,6 +16,7 @@ public abstract class AbstractEntity {
     @GeneratedValue
     private int id;
 
+
     @NotNull
     @NotEmpty(message = "Name cannot be empty!")
     @Size(max = 75, message = "Name cannot be more than 75 chars!")

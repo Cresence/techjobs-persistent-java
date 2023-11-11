@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Skill extends AbstractEntity {
 
     @NotNull
+    @NotEmpty
     @Size(min = 1, max = 250, message = "Description cannot be empty and must be no longer than 250 char!")
     private String description;
 
