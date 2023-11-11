@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import org.launchcode.techjobs.persistent.models.Employer;
 import org.launchcode.techjobs.persistent.models.Job;
 import org.launchcode.techjobs.persistent.models.Skill;
+import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
 import org.launchcode.techjobs.persistent.models.data.JobRepository;
-import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,19 +55,24 @@ public class HomeController {
                                        Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
-	    model.addAttribute("title", "Add Job");
+
+            model.addAttribute("title", "Add Job");
+            model.addAttribute("error", "Error with submission. Try again...");
             return "add";
         }
 
         Optional<Employer> resultE = employerRepository.findById(employerId);
-        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+
         if (resultE.isEmpty()){
             model.addAttribute("title", "Invalid Employer ID: " + employerId);
+        } else if (skills == null) {
+            model.addAttribute("title", "No available skills");
         } else {
             Employer employer = resultE.get();
+            model.addAttribute("title", "Employer: " + employer.getName());
+            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
             newJob.setSkills(skillObjs);
             newJob.setEmployer(employer);
-            model.addAttribute("title", "Employer: " + employer.getName());
             jobRepository.save(newJob);
         }
 
